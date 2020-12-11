@@ -45,14 +45,14 @@ const AoCD8_2 = (cmds: string[]): number => {
 
 const cmds = input.split("\n");
 
-const now1 = new Date().getMilliseconds();
+const now1 = Date.now();
 const solution1 = AoCD8_1(cmds);
-const elapsed1 = new Date().getMilliseconds() - now1;
+const elapsed1 = Date.now() - now1;
 
 console.log(solution1, elapsed1 + "ms");
 
-const now2 = new Date().getMilliseconds();
+const now2 = Date.now();
 const solution2 = AoCD8_2(cmds);
-const elapsed2 = new Date().getMilliseconds() - now2;
+const elapsed2 = Date.now() - now2;
 
 console.log(solution2, elapsed2 + "ms");

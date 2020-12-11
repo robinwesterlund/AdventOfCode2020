@@ -18,6 +18,28 @@ const replaceAt = (str: string, index: number, replacement: string) => {
   );
 };
 
+const checkDirectionOcc = (
+  rows: string[],
+  i_x: number,
+  i_y: number,
+  x: number,
+  y: number
+) => {
+  let i = 1;
+  let char = "";
+  if (rows[i_x + i * x] && rows[i_x + i * x][i_y + i * y]) {
+    char = rows[i_x + i * x][i_y + i * y];
+  }
+  while (char) {
+    if (char === "#") return true;
+    else if (char === "L") break;
+    i++;
+    if (!rows[i_x + i * x]) break;
+    char = rows[i_x + i * x][i_y + i * y];
+  }
+  return false;
+};
+
 const AoCD11_1 = (rows: string[]): number => {
   let copy = [...rows];
   let post = [...rows];
@@ -42,28 +64,6 @@ const AoCD11_1 = (rows: string[]): number => {
     if (JSON.stringify(post) === JSON.stringify(copy)) return totalOcc;
     copy = [...post];
   }
-};
-
-const checkDirectionOcc = (
-  rows: string[],
-  i_x: number,
-  i_y: number,
-  x: number,
-  y: number
-) => {
-  let i = 1;
-  let char = "";
-  if (rows[i_x + i * x] && rows[i_x + i * x][i_y + i * y]) {
-    char = rows[i_x + i * x][i_y + i * y];
-  }
-  while (char) {
-    if (char === "#") return true;
-    else if (char === "L") break;
-    i++;
-    if (!rows[i_x + i * x]) break;
-    char = rows[i_x + i * x][i_y + i * y];
-  }
-  return false;
 };
 
 const AoCD11_2 = (rows: string[]): number => {
@@ -95,14 +95,14 @@ const AoCD11_2 = (rows: string[]): number => {
 
 const lines = input.split("\n");
 
-const now1 = new Date().getMilliseconds();
+const now1 = Date.now();
 const solution1 = AoCD11_1(lines);
-const elapsed1 = new Date().getMilliseconds() - now1;
+const elapsed1 = Date.now() - now1;
 
 console.log(solution1, elapsed1 + "ms");
 
-const now2 = new Date().getMilliseconds();
+const now2 = Date.now();
 const solution2 = AoCD11_2(lines);
-const elapsed2 = new Date().getMilliseconds() - now2;
+const elapsed2 = Date.now() - now2;
 
 console.log(solution2, elapsed2 + "ms");
