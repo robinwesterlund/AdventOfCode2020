@@ -61,25 +61,25 @@ const AoCD11_1 = (rows: string[]): number => {
       }
     }
     post = [...test];
-    if (JSON.stringify(post) === JSON.stringify(copy)) return totalOcc;
+    if (post.find(p => copy.find(f => p === f) === undefined) === undefined) return totalOcc;
+    //if (JSON.stringify(post) === JSON.stringify(copy)) return totalOcc;
     copy = [...post];
   }
 };
 
 const AoCD11_2 = (rows: string[]): number => {
   let copy = [...rows];
-  let post = [...rows];
   while (true) {
-    let test = [...post];
+    let test = [...copy];
     let totalOcc = 0;
-    for (let i = 0; i < post.length; i++) {
-      for (let j = 0; j < post[0].length; j++) {
-        let char = post[i][j];
+    for (let i = 0; i < copy.length; i++) {
+      for (let j = 0; j < copy[0].length; j++) {
+        let char = copy[i][j];
         if (char === ".") continue;
-        if (char === "#") totalOcc++;
+        else if (char === "#") totalOcc++;
         let occ = 0;
         adj.forEach((v) => {
-          if (checkDirectionOcc(post, i, j, v[0], v[1])) occ++;
+          if (checkDirectionOcc(copy, i, j, v[0], v[1])) occ++;
         });
         if (occ === 0 && char === "L")
           test[i] = replaceAt(test[i], j, "#");
@@ -87,9 +87,8 @@ const AoCD11_2 = (rows: string[]): number => {
           test[i] = replaceAt(test[i], j, "L");
       }
     }
-    post = [...test];
-    if (JSON.stringify(post) === JSON.stringify(copy)) return totalOcc;
-    copy = [...post];
+    if (test.find(p => copy.find(f => p === f) === undefined) === undefined) return totalOcc;
+    copy = [...test];
   }
 };
 

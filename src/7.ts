@@ -39,17 +39,20 @@ const parseRules = (rules: string[]) => {
   return parsedRules;
 };
 
+const cache: any = {};
 const hasGold = (rule: parsedRule, parsedRules: parsedRule[]): boolean => {
+  if (cache[rule.color]) return cache[rule.color];
   for (let bag of rule.contains) {
-    if (bag.color === "shinygold") return true;
-    if (
-      hasGold(
-        parsedRules.find((r) => bag.color === r.color) as parsedRule,
-        parsedRules
-      )
-    )
+    if (bag.color === "shinygold") {
       return true;
+    }
+    const found = parsedRules.find((r) => bag.color === r.color);
+    if (hasGold(found, parsedRules)) {
+      cache[found.color] = true;
+      return true;
+    }
   }
+  cache[rule.color] = false;
   return false;
 };
 
@@ -57,9 +60,7 @@ const requiredBags = (rule: parsedRule, rules: parsedRule[]): number => {
   let sum = 0;
 
   for (let r of rule.contains) {
-    const containedRule = rules.find(
-      (bag) => r.color === bag.color
-    ) as parsedRule;
+    const containedRule = rules.find((bag) => r.color === bag.color);
     sum += r.amount;
     sum += r.amount * requiredBags(containedRule, rules);
   }
@@ -79,23 +80,21 @@ const AoCD7_1 = (rules: string[]): number => {
 
 const AoCD7_2 = (rules: string[]): number => {
   const parsedRules = parseRules(rules);
-  const goldenRule = parsedRules.find(
-    (pr) => pr.color === "shinygold"
-  ) as parsedRule;
+  const goldenRule = parsedRules.find((pr) => pr.color === "shinygold");
   const amount = requiredBags(goldenRule, parsedRules);
   return amount;
 };
 
-const rules = input.split("\n");
+const lines = input.split("\n");
 
 const now1 = Date.now();
-const solution1 = AoCD7_1(rules);
+const solution1 = AoCD7_1(lines);
 const elapsed1 = Date.now() - now1;
 
 console.log(solution1, elapsed1 + "ms");
 
 const now2 = Date.now();
-const solution2 = AoCD7_2(rules);
+const solution2 = AoCD7_2(lines);
 const elapsed2 = Date.now() - now2;
 
 console.log(solution2, elapsed2 + "ms");
