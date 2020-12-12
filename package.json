@@ -5,7 +5,7 @@
   "main": "index.ts",
   "scripts": {
     "aoc": "run(){ cd src/ && tsc $1 && node $1 && cd ..; }; run",
-    "aoc:all": "run(){ i=1; while [ \"$i\" -le 11 ]; do npm run aoc \"$i\"; i=$(( i + 1 )); done }; run"
+    "aoc:all": "run(){ i=1; while [ \"$i\" -le 12 ]; do npm run aoc \"$i\"; i=$(( i + 1 )); done }; run"
   },
   "author": "",
   "license": "ISC",
